@@ -6,11 +6,22 @@ export async function getCategories(
   res: Response
 ) {
   try {
+    // Solo para comprobar que el middleware funciona
+    console.log(req.user);
+
     const categories = await getAllCategories();
 
-    res.json(categories);
+    return res.json(categories);
+
   } catch (error) {
-    res.status(500).json({
+
+    if (error instanceof Error) {
+      return res.status(500).json({
+        message: error.message,
+      });
+    }
+
+    return res.status(500).json({
       message: "Internal server error",
     });
   }

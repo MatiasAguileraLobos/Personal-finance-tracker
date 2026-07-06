@@ -1,8 +1,9 @@
 import { Router } from "express";
 import { getCategories } from "../controllers/category.controller";
+import { authMiddleware } from "../middlewares/auth.middleware";
 
 const router = Router();
 
-router.get("/", getCategories);
+router.get("/", authMiddleware, getCategories);
 
-export default router;
+export default router;  

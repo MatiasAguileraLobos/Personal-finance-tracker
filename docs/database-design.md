@@ -110,7 +110,7 @@ User
 └────< Budget >───────── Category
 ```
 
----
+---x
 
 # Constraints
 
