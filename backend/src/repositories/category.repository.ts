@@ -7,3 +7,11 @@ export async function findAllCategories() {
     },
   });
 }
+
+export async function findCategoryById(id: string) {
+  return prisma.category.findUnique({
+    where: {
+      id,
+    },
+  });
+}
