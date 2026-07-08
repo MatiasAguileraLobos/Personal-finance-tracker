@@ -17,3 +17,17 @@ export async function createTransaction(
     },
   });
 }
+
+export async function findTransactionsByUser(userId: string) {
+  return prisma.transaction.findMany({
+    where: {
+      userId,
+    },
+    orderBy: {
+      date: "desc",
+    },
+    include: {
+      category: true,
+    },
+  });
+}

@@ -1,5 +1,8 @@
 import { Request, Response } from "express";
-import { createNewTransaction } from "../services/transaction.service";
+import {
+  createNewTransaction,
+  getUserTransactions,
+} from "../services/transaction.service";
 
 export async function createTransaction(
   req: Request,
@@ -24,6 +27,32 @@ export async function createTransaction(
     );
 
     return res.status(201).json(transaction);
+
+  } catch (error) {
+
+    if (error instanceof Error) {
+      return res.status(400).json({
+        message: error.message,
+      });
+    }
+
+    return res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+}
+
+export async function getTransactions(
+  req: Request,
+  res: Response
+) {
+  try {
+
+    const userId = req.user.userId;
+
+    const transactions = await getUserTransactions(userId);
+
+    return res.json(transactions);
 
   } catch (error) {
 

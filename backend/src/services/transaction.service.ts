@@ -1,4 +1,7 @@
-import { createTransaction } from "../repositories/transaction.repository";
+import {
+  createTransaction,
+  findTransactionsByUser,
+} from "../repositories/transaction.repository";
 import { findCategoryById } from "../repositories/category.repository";
 
 export async function createNewTransaction(
@@ -27,4 +30,8 @@ export async function createNewTransaction(
   );
 
   return transaction;
+}
+
+export async function getUserTransactions(userId: string) {
+  return findTransactionsByUser(userId);
 }
