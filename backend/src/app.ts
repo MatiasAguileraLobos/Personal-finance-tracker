@@ -5,6 +5,7 @@ import userRoutes from "./routes/user.routes";
 import categoryRoutes from "./routes/category.routes";
 import transactionRoutes from "./routes/transaction.routes";
 import budgetRoutes from "./routes/budget.routes"
+import dashboardRoutes from "./routes/dashboard.routes";
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use("/categories", categoryRoutes);
 app.use("/users", userRoutes);
 app.use("/transactions", transactionRoutes);
 app.use("/budgets",budgetRoutes);
+app.use("/dashboard", dashboardRoutes);
 
 
 export default app;
