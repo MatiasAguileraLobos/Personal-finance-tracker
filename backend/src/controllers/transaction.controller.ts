@@ -70,6 +70,14 @@ export async function getTransactions(
       ? String(req.query.type)
       : undefined;
 
+    const page = req.query.page
+      ? Number(req.query.page)
+      : 1;
+
+    const limit = req.query.limit
+      ? Number(req.query.limit)
+      : 10;
+
     const transactions = await getUserTransactions(
       userId,
       {
@@ -77,7 +85,9 @@ export async function getTransactions(
         year,
         categoryId,
         type,
-      }
+      },
+      page,
+      limit
     );
 
     return res.json(transactions);
@@ -163,7 +173,7 @@ export async function updateTransaction(
     }
 
     return res.status(500).json({
-      message: "Internal server error",
+        message: "Internal server error",
     });
   }
 }

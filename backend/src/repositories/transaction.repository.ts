@@ -25,7 +25,9 @@ export async function findTransactionsByUser(
         year?: number;
         categoryId?: string;
         type?: string;
-    }
+    },
+    page: number,
+    limit: number
 ) {
     const where: any = {
         userId,
@@ -48,7 +50,11 @@ export async function findTransactionsByUser(
         };
     }
 
-    return prisma.transaction.findMany({
+    const total = await prisma.transaction.count({
+        where,
+    });
+
+    const transactions = await prisma.transaction.findMany({
         where,
         orderBy: {
             date: "desc",
@@ -56,7 +62,14 @@ export async function findTransactionsByUser(
         include: {
             category: true,
         },
+        skip: (page - 1) * limit,
+        take: limit,
     });
+
+    return {
+        transactions,
+        total,
+    };
 }
 
 export async function findTransactionById(id: string) {

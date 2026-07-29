@@ -42,9 +42,24 @@ export async function getUserTransactions(
     year?: number;
     categoryId?: string;
     type?: string;
-  }
+  },
+  page: number,
+  limit: number
 ) {
-  return findTransactionsByUser(userId, filters);
+  const result = await findTransactionsByUser(
+    userId,
+    filters,
+    page,
+    limit
+  );
+
+  return {
+    page,
+    limit,
+    total: result.total,
+    totalPages: Math.ceil(result.total / limit),
+    transactions: result.transactions,
+  };
 }
 
 // Borrar una transacción
