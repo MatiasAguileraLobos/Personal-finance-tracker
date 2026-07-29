@@ -7,7 +7,7 @@ import {
 } from "../repositories/transaction.repository";
 import { findCategoryById } from "../repositories/category.repository";
 
-//creamos una nueva transaccion
+// Crear una nueva transacción
 export async function createNewTransaction(
   description: string,
   amount: number,
@@ -25,23 +25,29 @@ export async function createNewTransaction(
     throw new Error("Category not found");
   }
 
-  const transaction = await createTransaction(
+  return createTransaction(
     description,
     amount,
     date,
     categoryId,
     userId
   );
-
-  return transaction;
 }
 
-//obtenemos las transacciones por usuario
-export async function getUserTransactions(userId: string) {
-  return findTransactionsByUser(userId);
+// Obtener las transacciones por usuario con filtros opcionales
+export async function getUserTransactions(
+  userId: string,
+  filters: {
+    month?: number;
+    year?: number;
+    categoryId?: string;
+    type?: string;
+  }
+) {
+  return findTransactionsByUser(userId, filters);
 }
 
-//borramos una transaccion del usuario
+// Borrar una transacción
 export async function deleteUserTransaction(
   transactionId: string,
   userId: string

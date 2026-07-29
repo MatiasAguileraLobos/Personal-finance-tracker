@@ -6,7 +6,7 @@ import {
   updateUserTransaction,
 } from "../services/transaction.service";
 
-//crear transaccion
+// Crear transacción
 export async function createTransaction(
   req: Request,
   res: Response
@@ -45,7 +45,7 @@ export async function createTransaction(
   }
 }
 
-//crea obtener transaccion
+// Obtener transacciones
 export async function getTransactions(
   req: Request,
   res: Response
@@ -54,7 +54,31 @@ export async function getTransactions(
 
     const userId = req.user.userId;
 
-    const transactions = await getUserTransactions(userId);
+    const month = req.query.month
+      ? Number(req.query.month)
+      : undefined;
+
+    const year = req.query.year
+      ? Number(req.query.year)
+      : undefined;
+
+    const categoryId = req.query.categoryId
+      ? String(req.query.categoryId)
+      : undefined;
+
+    const type = req.query.type
+      ? String(req.query.type)
+      : undefined;
+
+    const transactions = await getUserTransactions(
+      userId,
+      {
+        month,
+        year,
+        categoryId,
+        type,
+      }
+    );
 
     return res.json(transactions);
 
@@ -72,7 +96,7 @@ export async function getTransactions(
   }
 }
 
-//borrar transacciones 
+// Borrar transacción
 export async function deleteTransaction(
   req: Request,
   res: Response
